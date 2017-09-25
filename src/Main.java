@@ -10,8 +10,8 @@ public class Main {
         printEntries(entries);
         printTuesdays(entries);
         countTueWedThur(entries);
-//        weekendList(entries);
-//        weekdaySet(entries);
+        weekendList(entries);
+        weekdaySet(entries);
 //        printDurationGreaterThan10(entries);
 //        findMaxDuration(entries);
 //        listGreaterThan50(entries);
@@ -47,41 +47,59 @@ public class Main {
         //Count the number of Tuesday, Wednesday, and Thursday entries
         System.out.println("For Loop:");
         int count = 0;
-        // write for loop
         for (Entry entry : entries) {
-            if (entry.getDay() == Day.TUESDAY) || 
+            if ((entry.getDay() == Day.TUESDAY) || (entry.getDay() == Day.WEDNESDAY) || (entry.getDay() == Day.THURSDAY)) {
+                count++;
+            }
         }
         System.out.println("Number of entries on Tuesday, Wednesday or Thursday: " + count);
         System.out.println("Stream, filter, count: ");
         long count1 = 0;
-        // write stream
+        count1 = entries.stream()
+            .filter(e -> e.getDay() == Day.TUESDAY || e.getDay() == Day.WEDNESDAY || e.getDay() == Day.THURSDAY)
+            .count();
+
         System.out.println("Number of entries on Tuesday, Wednesday or Thursday: " + count1);
         System.out.println();
     }
-//
-//    public static void weekendList(List<Entry> entries) {
-//        //Create a list of weekend (Saturday and Sunday) entries
-//        System.out.println("For Loop:");
-//        List<Entry> weekends = new ArrayList<>();
-//        // write for loop
-//        System.out.println(weekends);
-//        System.out.println("Stream, filter, collect:");
-//        weekends = // write stream use collect as the terminal operation
-//        System.out.println(weekends);
-//        System.out.println();
-//    }
-//
-//    public static void weekdaySet(List<Entry> entries) {
-//        //Create a SET of weekday entries
-//        System.out.println("For Loop:");
-//        Set<String> weekdays = new HashSet<>();
-//        // write for loop
-//        System.out.println(weekdays);
-//        System.out.println("Stream, filter, map, collect:");
-//        weekdays = // write stream
-//        System.out.println(weekdays);
-//        System.out.println();
-//    }
+
+    public static void weekendList(List<Entry> entries) {
+        //Create a list of weekend (Saturday and Sunday) entries
+        System.out.println("For Loop:");
+        List<Entry> weekends = new ArrayList<>();
+        for (Entry entry: entries) {
+            if ((entry.getDay() == Day.SATURDAY) || (entry.getDay() == Day.SUNDAY)) {
+                weekends.add(entry);
+            }
+        }
+        System.out.println(weekends);
+        System.out.println("Stream, filter, collect:");
+        weekends = entries.stream()
+            .filter(e -> e.getDay() == Day.SATURDAY || e.getDay() == Day.SUNDAY)
+            .collect(Collectors.toList());
+        System.out.println(weekends);
+        System.out.println();
+    }
+
+    public static void weekdaySet(List<Entry> entries) {
+        //Create a SET of weekday entries
+        System.out.println("For Loop:");
+        Set<String> weekdays = new HashSet<>();
+        // write for loop
+        for (Entry entry: entries) {
+            if ((entry.getDay() != Day.SATURDAY) && (entry.getDay() != Day.SUNDAY)) {
+                weekdays.add(entry.toString());
+            }
+        }
+        System.out.println(weekdays);
+        System.out.println("Stream, filter, map, collect:");
+        weekdays = entries.stream()
+            .filter(e -> e.getDay() != Day.SATURDAY && e.getDay() != Day.SUNDAY)
+            .map(e -> e.toString())
+            .collect(Collectors.toSet());
+        System.out.println(weekdays);
+        System.out.println();
+    }
 //
 //    public static void printDurationGreaterThan10(List<Entry> entries){
 //        System.out.println("For Loop:");
